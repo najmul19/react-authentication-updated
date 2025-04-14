@@ -1,4 +1,6 @@
-import { NavLink } from "react-router-dom";
+import { signOut } from "firebase/auth";
+import { NavLink, useNavigate } from "react-router-dom";
+import { auth } from "../../firebase.init";
 
 const Header = () => {
   const links = <>
@@ -7,6 +9,18 @@ const Header = () => {
       <li><NavLink to='/register'>Register</NavLink></li>
       <li><NavLink to='/signUp'>Sign Up</NavLink></li>
     </>
+    const navigate = useNavigate();
+    const handleSignOut =()=>{
+      signOut(auth)
+      .then(()=>{
+        console.log(" Sign out succesfull")
+        navigate('/signUp')
+      })
+      .catch((e)=>{
+        console.log("Error to sign out",e.message)
+
+      })
+    }
   
   return (
     <div className="navbar bg-base-100">
@@ -45,7 +59,7 @@ const Header = () => {
         </ul>
       </div>
       <div className="navbar-end">
-        <a className="btn">Button</a>
+        <button onClick={handleSignOut} className="btn btn-accent text-black">Sign Out</button>
       </div>
     </div>
   );

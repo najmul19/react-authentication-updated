@@ -1,13 +1,15 @@
 import {
   createUserWithEmailAndPassword,
+  GoogleAuthProvider,
   sendEmailVerification,
+  signInWithPopup,
   updateProfile,
 } from "firebase/auth";
 import { auth } from "../../firebase.init";
 import { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { Link } from "react-router-dom";
-
+import { Link, useNavigate } from "react-router-dom";
+import googlIcon from '../../assets/images/google.png'
 const SignUp = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
@@ -17,6 +19,11 @@ const SignUp = () => {
   // const p = 'nj';
   // console.log(patern.test(p));
 
+
+//   google sign up
+
+ const googleProvider= new GoogleAuthProvider();
+const navigate = useNavigate();
   const handleSignUp = (e) => {
     e.preventDefault();
     const email = e.target.email.value;
@@ -68,6 +75,7 @@ const SignUp = () => {
         .catch((e=>{
             console.log('user profile update',e.message)
         }))
+        
 
       })
       .catch((error) => {
@@ -76,9 +84,25 @@ const SignUp = () => {
         setSuccess(false);
       });
   };
+
+  const handleGoogleSignUp=()=>{
+    setSuccess(false);
+    setError("");
+    signInWithPopup(auth, googleProvider) 
+
+    .then(res=>{
+        setSuccess(true)
+        navigate('/');
+    })
+    .catch(e=>{
+        setError(e.message);
+    })
+    
+  }
   return (
     <div className="card bg-base-200 mx-auto w-full max-w-sm shrink-0 shadow-2xl">
       <h3 className="text-3xl ml-4  mt-4 font-bold">Sign Up now!</h3>
+      <button onClick={handleGoogleSignUp} className="btn btn-sm mx-6 mt-8"> <img className="w-5" src={googlIcon} alt="" /> Sign Up With Google</button>
       <form onSubmit={handleSignUp} className="card-body">
         <div className="form-control">
           <label className="label">
