@@ -1,4 +1,8 @@
-import { createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  sendEmailVerification,
+  updateProfile,
+} from "firebase/auth";
 import { auth } from "../../firebase.init";
 import { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
@@ -17,8 +21,11 @@ const SignUp = () => {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
+    const name = e.target.name.value;
+    const photo = e.target.photourl.value;
+   
     const terms = e.target.terms.checked;
-    console.log(email, password,terms);
+    console.log(name, photo,email, password, terms);
     // reset error status
     setError("");
     setSuccess(false);
@@ -27,9 +34,9 @@ const SignUp = () => {
       setError("Password should be 6 or longer");
       return;
     }
-    if(!terms){
-        setError('Please accept Our terms and conditions.');
-        return;
+    if (!terms) {
+      setError("Please accept Our terms and conditions.");
+      return;
     }
     const patern =
       /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@#!$%&*?])[A-Za-z\d@#!$%&*?]{6,}$/;
@@ -46,10 +53,22 @@ const SignUp = () => {
         console.log(res.user);
         setSuccess(true);
         // send verification email
-        sendEmailVerification(auth.currentUser)
+        sendEmailVerification(auth.currentUser).then(() => {
+          console.log("varification email send");
+        });
+        // update profile name and url
+        const profile = {
+            displayName: name,
+            photoURL: photo
+        }
+        updateProfile(auth.currentUser,profile)
         .then(()=>{
-            console.log('varification email send');
+            console.log('user profile update')
         })
+        .catch((e=>{
+            console.log('user profile update',e.message)
+        }))
+
       })
       .catch((error) => {
         console.log("ERROR", error.message);
@@ -61,6 +80,32 @@ const SignUp = () => {
     <div className="card bg-base-100 mx-auto w-full max-w-sm shrink-0 shadow-2xl">
       <h3 className="text-3xl ml-4 font-bold">Sign Up now!</h3>
       <form onSubmit={handleSignUp} className="card-body">
+        <div className="form-control">
+          <label className="label">
+            <span className="label-text">Name</span>
+          </label>
+          <input
+           
+            type="text"
+            name="name"
+            placeholder="name"
+            className="input w-full input-bordered"
+            required
+          />
+        </div>
+        <div className="form-control">
+          <label className="label">
+            <span className="label-text">Photo URL</span>
+          </label>
+          <input
+            
+            type="text"
+            name="photourl"
+            placeholder="photo url"
+            className="input w-full input-bordered"
+            required
+          />
+        </div>
         <div className="form-control ">
           <label className="label">
             <span className="label-text">Email</span>
@@ -100,9 +145,10 @@ const SignUp = () => {
         </div>
         <div className="form-control pt-3">
           <label className="label justify-start cursor-pointer">
-          <input name="terms" type="checkbox" className="checkbox" />
-            <span className="label-text ml-2">Accept Our Terms & Conditions.</span>
-            
+            <input name="terms" type="checkbox" className="checkbox" />
+            <span className="label-text ml-2">
+              Accept Our Terms & Conditions.
+            </span>
           </label>
         </div>
         <div className="form-control mt-6">
@@ -111,7 +157,9 @@ const SignUp = () => {
       </form>
       {error && <p className="text-red-600">{error}</p>}
       {success && <p className="text-green-600">Sign Up is Succesfull</p>}
-      <p className="m-2">Already Have an account? Please <Link to='/login'>Login</Link></p>
+      <p className="m-2">
+        Already Have an account? Please <Link to="/login">Login</Link>
+      </p>
     </div>
   );
 };
