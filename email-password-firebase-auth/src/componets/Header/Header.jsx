@@ -1,14 +1,14 @@
+import { NavLink } from "react-router-dom";
+
 const Header = () => {
-  const links = (
+  const links = 
     <>
-      <li>
-        <a>Item 1</a>
-      </li>
-      <li>
-        <a>Item 3</a>
-      </li>
+      <li><NavLink to='/'>Home</NavLink></li>
+      <li><NavLink to='/login'>Login</NavLink></li>
+      <li><NavLink to='/register'>Register</NavLink></li>
+      <li><NavLink to='/register2'>Register2</NavLink></li>
     </>
-  );
+  
   return (
     <div className="navbar bg-base-100">
       <div className="navbar-start">
@@ -39,7 +39,7 @@ const Header = () => {
         <a className="btn btn-ghost text-xl">daisyUI</a>
       </div>
       <div className="navbar-center hidden lg:flex">
-        <ul className="menu menu-horizontal px-1">
+        <ul className="menu menu-horizontal px-1 pr-3 gap-5">
           {
             links
           }
