@@ -4,6 +4,13 @@ import { useState } from "react";
 
 const SignUp = () => {
     const [error,setError] = useState('')
+    const [success,setSuccess]= useState(false)
+    
+    // const patern = /^(?=.*[A-Z]) (?=.*[a-z]) (?=.*\d) (?=.*[@#!$%^&*]) (?=.*[A-Za-z\d@#!$%^&*]){6}&/
+    // const p = 'nj';
+    // console.log(patern.test(p));
+  
+  
     const handleSignUp=(e)=>{
 
         e.preventDefault();
@@ -12,14 +19,29 @@ const SignUp = () => {
         console.log(email,password)
         // reset error status
         setError('');
+        setSuccess(false);
+
+        if(password.length<6) {
+            setError("Password should be 6 or longer");
+            return;
+        }
+        const patern = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@#!$%&*?])[A-Za-z\d@#!$%&*?]{6,}$/;
+        if(!patern.test(password)){
+            setError('At least one upper, one lower, one number, one special character');
+            return;
+        }
+        
+
         // create user with email pass
         createUserWithEmailAndPassword(auth,email,password)
         .then(res=>{
             console.log(res.user)
+            setSuccess(true)
         })
         .catch(error=>{
             console.log("ERROR",error.message);
             setError(error.message);
+            setSuccess(false);
         })
     }
   return (
@@ -62,7 +84,9 @@ const SignUp = () => {
           </form>
           {
             error && <p className="text-red-600">{error}</p>
-            
+          }
+          {
+            success && <p className="text-green-600">Sign Up is Succesfull</p>
           }
         </div>
      
