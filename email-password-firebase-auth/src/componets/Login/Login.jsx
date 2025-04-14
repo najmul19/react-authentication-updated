@@ -1,11 +1,12 @@
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { sendPasswordResetEmail, signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase.init";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 
 const Login = () => {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState("");
+  const emailRef = useRef();
   const handleLogin = (e) => {
     e.preventDefault();
     const email = e.target.email.value;
@@ -19,13 +20,32 @@ const Login = () => {
     signInWithEmailAndPassword(auth, email, password)
       .then((res) => {
         console.log(res.user);
-        setSuccess(true);
+        if(!res.user.emailVerified){
+            setError('Please Verify your email.')
+        } else {
+            setSuccess(true);
+        }
       })
       .catch((error) => {
         console.log(error.message);
         setError(error.message);
       });
   };
+  const handleForgatePassword=()=>{
+    console.log('get me email address!', emailRef.current.value)
+    const email = emailRef.current.value;
+    if(!email) {
+        console.log('please provde a valid email address')
+    } else {
+        sendPasswordResetEmail(auth, email)
+        .then(()=>{
+            alert('Password Reset email sent, please check your inbox');
+
+        }) .catch((error)=>{
+            console.log(error.message)
+        })
+    }
+  }
   return (
     <div className="hero bg-base-200 min-h-screen">
       <div className="hero-content flex-col lg:flex-row-reverse">
@@ -44,6 +64,7 @@ const Login = () => {
                 <span className="label-text">Email</span>
               </label>
               <input
+                ref={emailRef}
                 type="email"
                 name="email"
                 placeholder="email"
@@ -62,7 +83,7 @@ const Login = () => {
                 className="input input-bordered"
                 required
               />
-              <label className="label">
+              <label onClick={handleForgatePassword} className="label">
                 <a href="#" className="label-text-alt link link-hover">
                   Forgot password?
                 </a>
