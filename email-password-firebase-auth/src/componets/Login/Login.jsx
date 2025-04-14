@@ -96,10 +96,10 @@ const Login = () => {
             </div>
           </form>
 
-          {success && <p className="text-green-600">User Login Successfull</p>}
-          {error && <p className="text-red-600">{error}</p>}
-          <p>
-            New To this website? Please <Link to='/signUp'>Sign Up</Link>
+          {success && <p className="text-green-600 text-center">User Login Successfull</p>}
+          {error && <p className="text-red-600 text-center">{error}</p>}
+          <p className="text-center py-3">
+            New To this website? Please <Link to='/signUp' className="text-blue-600">Sign Up</Link>
           </p>
         </div>
       </div>

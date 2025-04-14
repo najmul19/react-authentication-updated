@@ -77,8 +77,8 @@ const SignUp = () => {
       });
   };
   return (
-    <div className="card bg-base-100 mx-auto w-full max-w-sm shrink-0 shadow-2xl">
-      <h3 className="text-3xl ml-4 font-bold">Sign Up now!</h3>
+    <div className="card bg-base-200 mx-auto w-full max-w-sm shrink-0 shadow-2xl">
+      <h3 className="text-3xl ml-4  mt-4 font-bold">Sign Up now!</h3>
       <form onSubmit={handleSignUp} className="card-body">
         <div className="form-control">
           <label className="label">
@@ -155,10 +155,10 @@ const SignUp = () => {
           <button className="btn btn-primary w-full">Sign Up</button>
         </div>
       </form>
-      {error && <p className="text-red-600">{error}</p>}
-      {success && <p className="text-green-600">Sign Up is Succesfull</p>}
-      <p className="m-2">
-        Already Have an account? Please <Link to="/login">Login</Link>
+      {error && <p className="text-red-600 text-center">{error}</p>}
+      {success && <p className="text-green-600 text-center">Sign Up is Succesfull</p>}
+      <p className="py-3 text-center">
+        Already Have an account? Please <Link to="/login" className="text-blue-600">Login</Link>
       </p>
     </div>
   );
