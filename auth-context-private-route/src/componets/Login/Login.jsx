@@ -1,19 +1,28 @@
+import { useContext } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../providers/AuthProvider";
 
 const Login = () => {
-    const handleLogin=(e)=>{
-        e.preventDefault();
-        const email = e.target.email.value
-        const password = e.target.password.value;
-        console.log(email,password);
+  const { signInUser } = useContext(AuthContext);
 
-    }   
+  const handleLogin = (e) => {
+    e.preventDefault();
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+    console.log(email, password);
+    signInUser(email, password)
+      .then((res) => {
+        console.log(res.user);
+      })
+      .catch((e) => {
+        console.log("ERROR", e.message);
+      });
+  };
   return (
     <div className="hero bg-base-200 min-h-screen">
       <div className="hero-content flex-col ">
         <div className="text-center lg:text-left">
           <h1 className="text-5xl font-bold">Login now!</h1>
-          
         </div>
         <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
           <form onSubmit={handleLogin} className="card-body">
@@ -22,7 +31,7 @@ const Login = () => {
                 <span className="label-text">Email</span>
               </label>
               <input
-              name="email"
+                name="email"
                 type="email"
                 placeholder="email"
                 className="input input-bordered"
@@ -34,7 +43,7 @@ const Login = () => {
                 <span className="label-text">Password</span>
               </label>
               <input
-              name="password"
+                name="password"
                 type="password"
                 placeholder="password"
                 className="input input-bordered"
@@ -50,7 +59,12 @@ const Login = () => {
               <button className="btn btn-primary">Login</button>
             </div>
           </form>
-          <p className="ml-4 mb-4">New To this website? Please <Link to='/register' className="text-blue-600">Register</Link> </p>
+          <p className="ml-4 mb-4">
+            New To this website? Please{" "}
+            <Link to="/register" className="text-blue-600">
+              Register
+            </Link>{" "}
+          </p>
         </div>
       </div>
     </div>
