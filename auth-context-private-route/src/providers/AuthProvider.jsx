@@ -1,11 +1,17 @@
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import { createContext } from "react";
+import { auth } from "../firebase.init";
 
 export const AuthContext = createContext(null);
 const AuthProvider = ({children}) => {
+    const createUser = (email,password)=>{
+        return createUserWithEmailAndPassword(auth,email,password);
+    }
+    
     const authInf= {
         name: 'bal kal cal sal mal...',
+        createUser,
     }
-
     return (
         <AuthContext.Provider value={authInf}>
             {/* mai part who will have access to this context */}
