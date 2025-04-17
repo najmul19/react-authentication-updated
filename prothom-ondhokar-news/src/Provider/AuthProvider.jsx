@@ -15,16 +15,16 @@ const AuthProvider = ({ children }) => {
 
   console.log(loading ,user);
   const createNewUser = (email, password) => {
-    loading(true)
+    setLoading(true)
     return createUserWithEmailAndPassword(auth, email, password);
   };
 
   const logOut = () => {
-    loading(true)
+    setLoading(true)
     return signOut(auth);
   };
   const sigIn = (email, password) => {
-    loading(true)
+    setLoading(true)
     return signInWithEmailAndPassword(auth, email, password);
   };
   useEffect(() => {
