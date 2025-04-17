@@ -1,5 +1,6 @@
 import React from 'react';
 import { FaStar, FaEye, FaShareAlt } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 const NewsCard = ({news}) => {
   return (
@@ -36,8 +37,9 @@ const NewsCard = ({news}) => {
         
         <p className="text-sm text-gray-600">
          {news.details.slice(0,150)}...{" "}
-         <span><a href="#" className="text-red-500 text-sm font-semibold">Read More</a></span>
+         
         </p>
+        <Link to={`/news/${news._id}`}><a href="#" className="text-red-500 text-sm font-semibold">Read More</a></Link>
         
         
 
