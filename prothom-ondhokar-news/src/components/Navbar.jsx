@@ -3,7 +3,7 @@ import userIcon from "../assets/user.png";
 import { useContext } from "react";
 import { AuthContext } from "../Provider/AuthProvider";
 const Navbar = () => {
-  const {user,logOut} = useContext(AuthContext);
+  const { user, logOut } = useContext(AuthContext);
   return (
     <div className="flex justify-between items-center">
       <div className="">{user?.email}</div>
@@ -15,12 +15,30 @@ const Navbar = () => {
 
       <div className="login flex gap-2 items-center ">
         <div className=" ">
-          <img src={userIcon} alt="" />
+          {user && user?.email ? (
+            <div className="w-full">
+              <div className="flex justify-center items-center">
+                <img
+                  className="w-10 rounded-full"
+                  src={user.photoURL}
+                  alt=""
+                />
+              </div>
+              <p>{user.displayName}</p>
+            </div>
+          ) : (
+            <img src={userIcon} alt="" />
+          )}
         </div>
-        {
-          user &&  user?.email ? <button onClick={logOut} className="btn btn-neutral rounded-none">Logout</button> :<Link to='/auth/login' className="btn btn-neutral rounded-none">Login</Link >
-        }
-        
+        {user && user?.email ? (
+          <button onClick={logOut} className="btn btn-neutral rounded-none">
+            Logout
+          </button>
+        ) : (
+          <Link to="/auth/login" className="btn btn-neutral rounded-none">
+            Login
+          </Link>
+        )}
       </div>
     </div>
   );

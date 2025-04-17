@@ -1,22 +1,44 @@
-import { useContext } from "react";
-import { Link } from "react-router-dom";
+import { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../Provider/AuthProvider";
 
 const Register = () => {
-  const { createNewUser,setUser } = useContext(AuthContext);
+  const { createNewUser, setUser, updateUserProfile } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const [error, setError] = useState({});
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    
     // const name = e.target.name.value;
     const form = new FormData(e.target);
     const name = form.get("name");
+    if (name.length < 5) {
+      setError({ ...error, name: "must be more then 5 character long" });
+      return;
+    }
+   
     const email = form.get("email");
+    if (!emailPattern.test(email)) {
+      setError({...error, email: "Please enter a valid email address"});
+      return;
+    }
+
     const photo = form.get("photo");
     const password = form.get("password");
     console.log({ name, email, photo, password });
     createNewUser(email, password)
       .then((res) => {
         const user = res.user;
-        setUser(user)
+        setUser(user);
+        updateUserProfile({displayName:name,photoURL:photo})
+        .then(()=>{
+          navigate('/')
+        })
+        .catch(e=>{
+          console.log(e.code);
+        })
         console.log(user);
       })
       .catch((e) => {
@@ -41,6 +63,12 @@ const Register = () => {
               className="input w-full input-bordered"
               required
             />
+            {error.name && (
+              <label className="label text-xs text-rose-600 ">
+                {error.name}
+              </label>
+              
+            )}
           </div>
           <div className="form-control">
             <label className="label">
@@ -66,6 +94,12 @@ const Register = () => {
               required
             />
           </div>
+
+          {error.email && (
+              <label className="label text-xs text-rose-600 ">
+                {error.email}
+              </label>
+            )}
 
           <div className="form-control">
             <label className="label">
