@@ -10,15 +10,15 @@ const Register = () => {
     const email = e.target.email.value;
     const password = e.target.password.value;
     const name = e.target.name.value;
-    console.log(name, email, password);
+    // console.log(name, email, password);
     createUser(email,password)
     .then((res)=>{
-        console.log(res.user)
+        // console.log(res.user)
         e.target.reset();
         navigate('/')
     })
     .catch(e=>{
-        console.log(e.message)
+        // console.log(e.message)
     })
   };
   return (

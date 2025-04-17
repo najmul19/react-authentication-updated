@@ -8,16 +8,16 @@ const Login = () => {
 
   const location = useLocation();
   const navigate = useNavigate();
-  console.log(location);
+  // console.log(location);
   const handleSubmit = (e) => {
     e.preventDefault();
     const form = e.target;
     const email = form.email.value;
     const password = form.password.value;
-    console.log(email, password);
+    // console.log(email, password);
     sigIn(email, password)
       .then((res) => {
-        console.log(res.user);
+        // console.log(res.user);
         setUser(res.user);
         navigate(location?.state ? location.state : "/");
       })

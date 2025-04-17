@@ -7,7 +7,7 @@ const Navbar = () => {
     // const authInfo = useContext(AuthContext)
     // console.log(authInfo)
     const {user, signOutUser} = useContext(AuthContext)
-    console.log(user)
+    // console.log(user)
   
     const links = (
     <>
@@ -27,10 +27,10 @@ const Navbar = () => {
   const handelSignOut =()=>{
     signOutUser()
     .then(()=>{
-        console.log("user sign out successfully")
+        // console.log("user sign out successfully")
     })
     .catch(e=>{
-        console.log("ERRRO",e);
+        // console.log("ERRRO",e);
     })
   }
   return (

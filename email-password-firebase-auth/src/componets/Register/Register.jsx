@@ -8,15 +8,15 @@ const Register = () => {
     const email = event.target.email.value;
     const password = event.target.password.value;
 
-    console.log(email,password);
+    // console.log(email,password);
 
     // create user with email pass 
     createUserWithEmailAndPassword(auth,email,password)
     .then(res=>{
-      console.log(res.user);
+      // console.log(res.user);
     })
     .catch(error=>{
-      console.log(error);
+      // console.log(error);
     })
 
   }

@@ -27,7 +27,7 @@ const Register = () => {
 
     const photo = form.get("photo");
     const password = form.get("password");
-    console.log({ name, email, photo, password });
+    // console.log({ name, email, photo, password });
     createNewUser(email, password)
       .then((res) => {
         const user = res.user;
@@ -37,12 +37,12 @@ const Register = () => {
           navigate('/')
         })
         .catch(e=>{
-          console.log(e.code);
+          // console.log(e.code);
         })
-        console.log(user);
+        // console.log(user);
       })
       .catch((e) => {
-        console.log("ERROR: ", e.message);
+        // console.log("ERROR: ", e.message);
       });
   };
   return (

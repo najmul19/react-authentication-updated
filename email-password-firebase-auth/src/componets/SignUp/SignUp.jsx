@@ -32,7 +32,7 @@ const navigate = useNavigate();
     const photo = e.target.photourl.value;
    
     const terms = e.target.terms.checked;
-    console.log(name, photo,email, password, terms);
+    // console.log(name, photo,email, password, terms);
     // reset error status
     setError("");
     setSuccess(false);
@@ -57,11 +57,11 @@ const navigate = useNavigate();
     // create user with email pass
     createUserWithEmailAndPassword(auth, email, password)
       .then((res) => {
-        console.log(res.user);
+        // console.log(res.user);
         setSuccess(true);
         // send verification email
         sendEmailVerification(auth.currentUser).then(() => {
-          console.log("varification email send");
+          // console.log("varification email send");
         });
         // update profile name and url
         const profile = {
@@ -70,10 +70,10 @@ const navigate = useNavigate();
         }
         updateProfile(auth.currentUser,profile)
         .then(()=>{
-            console.log('user profile update')
+            // console.log('user profile update')
         })
         .catch((e=>{
-            console.log('user profile update',e.message)
+            // console.log('user profile update',e.message)
         }))
         
 

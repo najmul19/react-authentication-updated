@@ -10,25 +10,25 @@ const Login = () => {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
-    console.log(email, password);
+    // console.log(email, password);
     signInUser(email, password)
       .then((res) => {
-        console.log(res.user);
+        // console.log(res.user);
         e.target.reset()
         navigate('/');
       })
       .catch((e) => {
-        console.log("ERROR", e.message);
+        // console.log("ERROR", e.message);
       });
   };
   const handleGoogleSignIn=()=>{
     signInWithGoogle()
     .then(res=>{
-        console.log(res.user);
+        // console.log(res.user);
         navigate('/');
     })
     .catch(e=>{
-        console.log("ERROR",e.message)
+        // console.log("ERROR",e.message)
     })
   }
   return (
