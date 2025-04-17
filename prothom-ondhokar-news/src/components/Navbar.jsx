@@ -24,7 +24,7 @@ const Navbar = () => {
                   alt=""
                 />
               </div>
-              <p>{user.displayName}</p>
+              <p className="font-poppins">{user.displayName}</p>
             </div>
           ) : (
             <img src={userIcon} alt="" />
